@@ -1,7 +1,6 @@
 package com.yzj.risingpath_zsb_backend.utils;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.Mapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Map;

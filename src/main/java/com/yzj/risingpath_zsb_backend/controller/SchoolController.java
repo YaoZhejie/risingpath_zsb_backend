@@ -14,10 +14,8 @@ import com.yzj.risingpath_zsb_backend.service.ProfessinfoService;
 import com.yzj.risingpath_zsb_backend.service.SchoolService;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 
 import static com.yzj.risingpath_zsb_backend.contant.UserConstant.ADMIN_ROLE;
