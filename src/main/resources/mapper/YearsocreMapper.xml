@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzj.risingpath_zsb_backend.mapper.YearsocreMapper">
+
+    <resultMap id="BaseResultMap" type="com.yzj.risingpath_zsb_backend.domain.Yearsocre">
+        <id property="scoreId" column="scoreId" jdbcType="INTEGER"/>
+        <result property="schoolId" column="schoolId" jdbcType="INTEGER"/>
+        <result property="proId" column="proId" jdbcType="INTEGER"/>
+        <result property="year" column="year" jdbcType="INTEGER"/>
+        <result property="maxScore" column="maxScore" jdbcType="INTEGER"/>
+        <result property="minScore" column="minScore" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        scoreId
+        ,schoolId,proId,
+        year,maxScore,minScore
+    </sql>
+
+    <select id="allYearScore"
+            resultType="com.yzj.risingpath_zsb_backend.domain.request.YearScoreRequest"
+            parameterType="java.lang.String">
+        SELECT professinfo.type,
+               school.schoolName,
+               professinfo.professName,
+               school.city,
+               MAX(CASE WHEN year = 2021 THEN minScore ELSE NULL END) AS 'twoYearBefore', MAX(CASE WHEN year = 2022 THEN minScore ELSE NULL END) AS 'oneYearBefore', MAX(CASE WHEN year = 2023 THEN minScore ELSE NULL END) AS 'currentYear', professinfo.remarks
+        FROM school,
+             professinfo,
+             yearsocre
+        where yearsocre.proId = professinfo.proId
+          AND yearsocre.schoolId = school.schoolId
+        GROUP BY yearsocre.schoolId, yearsocre.proId;
+    </select>
+
+</mapper>

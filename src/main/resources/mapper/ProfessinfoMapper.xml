@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzj.risingpath_zsb_backend.mapper.ProfessinfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.yzj.risingpath_zsb_backend.domain.Professinfo">
+        <id property="proId" column="proId" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="schoolId" column="schoolId" jdbcType="INTEGER"/>
+        <result property="professName" column="professName" jdbcType="VARCHAR"/>
+        <result property="totalPlan" column="totalPlan" jdbcType="INTEGER"/>
+        <result property="troublePlan" column="troublePlan" jdbcType="INTEGER"/>
+        <result property="soldierPlan" column="soldierPlan" jdbcType="INTEGER"/>
+        <result property="tuition" column="tuition" jdbcType="INTEGER"/>
+        <result property="englishReq" column="englishReq" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <resultMap id="schoolAndProfession" type="com.yzj.risingpath_zsb_backend.domain.request.ProfessinfoRequest">
+        <id property="proId" column="proId" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="schoolId" column="schoolId" jdbcType="INTEGER"/>
+        <result property="professName" column="professName" jdbcType="VARCHAR"/>
+        <result property="totalPlan" column="totalPlan" jdbcType="INTEGER"/>
+        <result property="troublePlan" column="troublePlan" jdbcType="INTEGER"/>
+        <result property="soldierPlan" column="soldierPlan" jdbcType="INTEGER"/>
+        <result property="tuition" column="tuition" jdbcType="INTEGER"/>
+        <result property="englishReq" column="englishReq" jdbcType="VARCHAR"/>
+        <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+        <association property="school" javaType="com.yzj.risingpath_zsb_backend.domain.School">
+            <id property="schoolId" column="schoolId" jdbcType="INTEGER"/>
+            <result property="schoolName" column="schoolName" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="schoolPhone" column="schoolPhone" jdbcType="VARCHAR"/>
+            <result property="schoolCode" column="schoolCode" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        proId
+        ,type,schoolId,
+        professName,totalPlan,troublePlan,
+        soldierPlan,tuition,englishReq,
+        remarks
+    </sql>
+
+    <select id="allProfessinfo" resultMap="schoolAndProfession">
+        select professinfo.type,
+               professinfo.proId,
+               school.schoolCode,
+               school.schoolId,
+               school.schoolName,
+               professinfo.professName,
+               professinfo.totalPlan,
+               professinfo.troublePlan,
+               professinfo.soldierPlan,
+               professinfo.tuition,
+               professinfo.englishReq,
+               professinfo.remarks
+        from professinfo,
+             school
+        where professinfo.schoolId = school.schoolId
+    </select>
+    <select id="professinfoLikeKeyinfo" resultMap="schoolAndProfession" parameterType="java.lang.String">
+        select professinfo.type,
+               professinfo.proId,
+               school.schoolCode,
+               school.schoolName,
+               professinfo.professName,
+               professinfo.totalPlan,
+               professinfo.troublePlan,
+               professinfo.soldierPlan,
+               professinfo.tuition,
+               professinfo.englishReq,
+               professinfo.remarks
+        from professinfo,
+             school
+        where professinfo.schoolId = school.schoolId
+          and professinfo.professName like  CONCAT('%', #{professName}, '%')
+    </select>
+    <select id="professLikeRemark" resultMap="schoolAndProfession" parameterType="java.lang.String">
+        select professinfo.type,
+               professinfo.proId,
+               school.schoolCode,
+               school.schoolName,
+               professinfo.professName,
+               professinfo.totalPlan,
+               professinfo.troublePlan,
+               professinfo.soldierPlan,
+               professinfo.tuition,
+               professinfo.englishReq,
+               professinfo.remarks
+        from professinfo,
+             school
+        where professinfo.schoolId = school.schoolId
+          and professinfo.remarks like  CONCAT('%', #{remark}, '%')
+    </select>
+    <select id="professLikeSchoolName" resultMap="schoolAndProfession" parameterType="java.lang.String">
+        select professinfo.type,
+               professinfo.proId,
+               school.schoolCode,
+               school.schoolName,
+               professinfo.professName,
+               professinfo.totalPlan,
+               professinfo.troublePlan,
+               professinfo.soldierPlan,
+               professinfo.tuition,
+               professinfo.englishReq,
+               professinfo.remarks
+        from professinfo,
+             school
+        where professinfo.schoolId = school.schoolId
+          and school.schoolName like  CONCAT('%', #{schoolName}, '%')
+    </select>
+
+
+</mapper>
