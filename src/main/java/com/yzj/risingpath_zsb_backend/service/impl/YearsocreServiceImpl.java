@@ -6,13 +6,13 @@ import com.yzj.risingpath_zsb_backend.common.ErrorCode;
 import com.yzj.risingpath_zsb_backend.domain.Professinfo;
 import com.yzj.risingpath_zsb_backend.domain.School;
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
-import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreDto;
-import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreDto;
+import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreRequest;
 import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.mapper.ProfessinfoMapper;
 import com.yzj.risingpath_zsb_backend.mapper.SchoolMapper;
-import com.yzj.risingpath_zsb_backend.domain.request.YearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import com.yzj.risingpath_zsb_backend.mapper.YearsocreMapper;
 import org.springframework.beans.BeanUtils;
@@ -71,37 +71,42 @@ public class YearsocreServiceImpl extends ServiceImpl<YearsocreMapper, Yearsocre
 
     @Override
     public List<YearScoreVo> getYearScoreBySchool(Integer sid, Integer proId) {
-
+        //获取学校的id作为键，学校对象作为value
         Map<Integer, School> schoolMap = schoolMapper.selectList(null).stream().collect(Collectors.toMap(School::getSchoolId, Function.identity()));
+        //获取专业的id作为键，专业的对象作为value
         Map<Integer, Professinfo> proMap = professinfoMapper.selectList(null).stream().collect(Collectors.toMap(Professinfo::getProId, Function.identity()));
-
+        //查询对应学校专业的分数列表
         List<Yearsocre> list = this.list(new QueryWrapper<Yearsocre>().eq("schoolId", sid).eq("proId", proId));
+        //创建一个List<YearScoreVo>作为输出VO
         List<YearScoreVo> resultList = new ArrayList<>();
-
+        //将学校的名字和专业的名字赋值到VO对象当中
         list.stream().forEach(yearsocre -> {
             YearScoreVo yearScoreVo = new YearScoreVo();
+            //将 yearsocre 对象的属性值复制到 yearScoreVo 对象中
             BeanUtils.copyProperties(yearsocre, yearScoreVo);
+            //通过yearScoreVo中的学校id获取到学校中的学校名
             String schoolName = schoolMap.get(yearScoreVo.getSchoolId()).getSchoolName();
             String professName = proMap.get(yearScoreVo.getProId()).getProfessName();
             yearScoreVo.setProfessName(professName);
             yearScoreVo.setSchoolName(schoolName);
+            //增加一个YearScoreVo到resultList
             resultList.add(yearScoreVo);
         });
         return resultList;
     }
 
     @Override
-    public Boolean saveYearScore(AddYearScoreDto addYearScoreDto) {
+    public Boolean saveYearScore(AddYearScoreRequest addYearScoreRequest) {
         Yearsocre yearsocre = new Yearsocre();
-        BeanUtils.copyProperties(addYearScoreDto, yearsocre);
-        yearsocre.setYear(addYearScoreDto.getScoreYear());
+        BeanUtils.copyProperties(addYearScoreRequest, yearsocre);
+        yearsocre.setYear(addYearScoreRequest.getScoreYear());
         //判断学校，专业是否存在
-        School schoolId = schoolMapper.selectOne(new QueryWrapper<School>().eq("schoolName", addYearScoreDto.getSchoolName()));
+        School schoolId = schoolMapper.selectOne(new QueryWrapper<School>().eq("schoolName", addYearScoreRequest.getSchoolName()));
         if (schoolId == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
 
-        Professinfo professinfo = professinfoMapper.selectOne(new QueryWrapper<Professinfo>().eq("professName", addYearScoreDto.getProfessName()).eq("schoolId",schoolId.getSchoolId()));
+        Professinfo professinfo = professinfoMapper.selectOne(new QueryWrapper<Professinfo>().eq("professName", addYearScoreRequest.getProfessName()).eq("schoolId",schoolId.getSchoolId()));
             if (professinfo == null) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -112,16 +117,16 @@ public class YearsocreServiceImpl extends ServiceImpl<YearsocreMapper, Yearsocre
     }
 
     @Override
-    public Boolean updateYearScore(PutYearScoreDto putYearScoreDto) {
+    public Boolean updateYearScore(PutYearScoreRequest putYearScoreRequest) {
         Yearsocre yearsocre = new Yearsocre();
-        BeanUtils.copyProperties(putYearScoreDto, yearsocre);
+        BeanUtils.copyProperties(putYearScoreRequest, yearsocre);
         //判断学校，专业是否存在
-        School schoolId = schoolMapper.selectOne(new QueryWrapper<School>().eq("schoolName", putYearScoreDto.getSchoolName()));
+        School schoolId = schoolMapper.selectOne(new QueryWrapper<School>().eq("schoolName", putYearScoreRequest.getSchoolName()));
         if (schoolId == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
 
-        Professinfo professinfo = professinfoMapper.selectOne(new QueryWrapper<Professinfo>().eq("professName", putYearScoreDto.getProfessName()).eq("schoolId",schoolId.getSchoolId()));
+        Professinfo professinfo = professinfoMapper.selectOne(new QueryWrapper<Professinfo>().eq("professName", putYearScoreRequest.getProfessName()).eq("schoolId",schoolId.getSchoolId()));
         if (professinfo == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

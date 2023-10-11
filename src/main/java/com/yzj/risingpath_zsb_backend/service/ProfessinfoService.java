@@ -1,8 +1,10 @@
 package com.yzj.risingpath_zsb_backend.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yzj.risingpath_zsb_backend.domain.Professinfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yzj.risingpath_zsb_backend.domain.dto.ProfessionInfoRequest;
+import com.yzj.risingpath_zsb_backend.domain.vo.ProfessionAndSchoolVo;
 
 import java.util.List;
 
@@ -22,10 +24,10 @@ public interface ProfessinfoService extends IService<Professinfo> {
     /**
      * 专业模糊查询
      * @param
-     * @param professinfo
+     * @param
      * @return
      */
-    public List<Professinfo> professinfoLikeKey(String professinfo);
+
 
     /**
      * 根据备注模糊查询
@@ -46,5 +48,11 @@ public interface ProfessinfoService extends IService<Professinfo> {
      * 根据学校主键查询专业
      */
     public List<Professinfo> professBySchoolId(Integer schoolId);
+
+
+    /**
+     * 根据学校名称，升本专业名称，升本的备注名称分页查询信息
+     */
+//    public Page<ProfessionAndSchoolVo> PageAllProfessionsByLike(ProfessionInfoRequest professionInfoRequest);
 
 }

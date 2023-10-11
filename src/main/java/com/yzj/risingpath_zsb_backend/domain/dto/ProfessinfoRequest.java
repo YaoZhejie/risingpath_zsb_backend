@@ -1,4 +1,4 @@
-package com.yzj.risingpath_zsb_backend.domain.request;
+package com.yzj.risingpath_zsb_backend.domain.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

@@ -18,7 +18,7 @@
     </resultMap>
 
 
-    <resultMap id="schoolAndProfession" type="com.yzj.risingpath_zsb_backend.domain.request.ProfessinfoRequest">
+    <resultMap id="schoolAndProfession" type="com.yzj.risingpath_zsb_backend.domain.dto.ProfessinfoRequest">
         <id property="proId" column="proId" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
         <result property="schoolId" column="schoolId" jdbcType="INTEGER"/>
@@ -112,8 +112,22 @@
         from professinfo,
              school
         where professinfo.schoolId = school.schoolId
-          and school.schoolName like  CONCAT('%', #{schoolName}, '%')
-    </select>
+
+            <if test="tableInfoQueryRequest != null">
+                <!-- 检查查询包装类中的 name 和 content 字段是否不为空，如果不为空则添加模糊查询条件 -->
+                <if test="professionInfoRequest.schoolName != null and professionInfoRequest.schoolName != ''">
+                    AND school.schoolName LIKE CONCAT('%', #{professionInfoRequest.SchoolName}, '%')
+                </if>
+                <if test="professionInfoRequest.professName != null and professionInfoRequest.professName != ''">
+                    AND professinfo.professName LIKE CONCAT('%', #{professionInfoRequest.professName}, '%')
+                </if>
+                <if test="professionInfoRequest.remarks != null and professionInfoRequest.remarks != ''">
+                    AND professinfo.remarks LIKE CONCAT('%', #{professionInfoRequest.remarks}, '%')
+                </if>
+            </if>
+            ORDER BY ti.id
+        </select>
+
 
 
 </mapper>

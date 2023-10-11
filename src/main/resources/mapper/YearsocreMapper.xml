@@ -20,7 +20,7 @@
     </sql>
 
     <select id="allYearScore"
-            resultType="com.yzj.risingpath_zsb_backend.domain.request.YearScoreRequest"
+            resultType="com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest"
             parameterType="java.lang.String">
         SELECT professinfo.type,
                school.schoolName,

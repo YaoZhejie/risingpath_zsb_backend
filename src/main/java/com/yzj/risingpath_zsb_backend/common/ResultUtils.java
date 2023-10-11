@@ -1,11 +1,13 @@
 package com.yzj.risingpath_zsb_backend.common;
 
+import java.io.Serializable;
+
 /**
  * 返回工具类
  *
  * @author 姚浙杰
  */
-public class ResultUtils {
+public class ResultUtils<I extends Serializable> {
 
     /**
      * 成功

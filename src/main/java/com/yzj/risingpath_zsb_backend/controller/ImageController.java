@@ -6,6 +6,7 @@ import com.yzj.risingpath_zsb_backend.common.ResultUtils;
 import com.yzj.risingpath_zsb_backend.domain.User;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.util.FileCopyUtils;
@@ -24,7 +25,7 @@ import java.nio.file.Paths;
 @RestController
 public class ImageController {
     private static final String UPLOAD_DIR = "static/";
-    @javax.annotation.Resource
+    @Autowired
     private UserService userService;
     /**
      * 更新用户头像

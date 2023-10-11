@@ -5,7 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Objects;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -13,6 +17,8 @@ import lombok.Data;
  */
 @TableName(value ="professinfo")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Professinfo implements Serializable {
     /**
      * 专业信息表id
@@ -36,7 +42,7 @@ public class Professinfo implements Serializable {
     private String professName;
 
     /**
-     * 总计划书
+     * 总计划数
      */
     private Integer totalPlan;
 
@@ -68,4 +74,19 @@ public class Professinfo implements Serializable {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public Professinfo(Professinfo professinfo) {
+        if (Objects.nonNull(professinfo)){
+            this.proId = professinfo.proId;
+            this.type = professinfo.type;
+            this.schoolId = professinfo.schoolId;
+            this.professName = professinfo.professName;
+            this.totalPlan = professinfo.totalPlan;
+            this.troublePlan = professinfo.troublePlan;
+            this.soldierPlan = professinfo.soldierPlan;
+            this.tuition = professinfo.tuition;
+            this.englishReq = professinfo.englishReq;
+            this.remarks = professinfo.remarks;
+        }
+    }
 }

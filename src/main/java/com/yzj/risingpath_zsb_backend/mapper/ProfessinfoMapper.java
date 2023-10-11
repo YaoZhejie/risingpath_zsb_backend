@@ -1,5 +1,6 @@
 package com.yzj.risingpath_zsb_backend.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yzj.risingpath_zsb_backend.domain.Professinfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -22,7 +23,7 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
      *   根据专业模糊查询
      */
 
-    public List<Professinfo> professinfoLikeKeyinfo(String professName);
+    public Page<Professinfo> professinfoLikeKeyinfo(String professName);
 
     /**
      * 根据备注名称模糊查询
@@ -34,6 +35,8 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
      */
     public List<Professinfo> professLikeSchoolName(String schoolName);
 
+
+    List<Professinfo> allProfessinfo(Page<Professinfo> page, String key);
 }
 
 

@@ -4,11 +4,11 @@ import com.yzj.risingpath_zsb_backend.common.BaseResponse;
 import com.yzj.risingpath_zsb_backend.common.ErrorCode;
 import com.yzj.risingpath_zsb_backend.common.ResultUtils;
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
-import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreDto;
-import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreDto;
+import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreRequest;
 import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
-import com.yzj.risingpath_zsb_backend.domain.request.YearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -65,7 +65,7 @@ public class YearscoreController {
 
 
     @PostMapping("/update")
-    public BaseResponse<Boolean> updateYearScore(@Validated @RequestBody PutYearScoreDto yearScoreDto) {
+    public BaseResponse<Boolean> updateYearScore(@Validated @RequestBody PutYearScoreRequest yearScoreDto) {
         return ResultUtils.success(yearsocreService.updateYearScore(yearScoreDto));
     }
 
@@ -80,7 +80,7 @@ public class YearscoreController {
 
     //保存一条分数信息
     @PostMapping("/save")
-    public BaseResponse<Boolean> saveYearScore(@Validated @RequestBody AddYearScoreDto yearScoreDto) {
+    public BaseResponse<Boolean> saveYearScore(@Validated @RequestBody AddYearScoreRequest yearScoreDto) {
         return ResultUtils.success(yearsocreService.saveYearScore(yearScoreDto));
     }
 

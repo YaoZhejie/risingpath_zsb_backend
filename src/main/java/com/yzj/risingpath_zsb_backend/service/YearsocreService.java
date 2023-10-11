@@ -2,10 +2,10 @@ package com.yzj.risingpath_zsb_backend.service;
 
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreDto;
-import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreDto;
+import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreRequest;
 import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
-import com.yzj.risingpath_zsb_backend.domain.request.YearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public interface YearsocreService extends IService<Yearsocre> {
 
     List<YearScoreVo> getYearScoreBySchool(Integer sid, Integer proId);
 
-   Boolean saveYearScore(AddYearScoreDto addYearScoreDto);
+   Boolean saveYearScore(AddYearScoreRequest addYearScoreRequest);
 
-   Boolean updateYearScore(PutYearScoreDto putYearScoreDto);
+   Boolean updateYearScore(PutYearScoreRequest putYearScoreRequest);
 }

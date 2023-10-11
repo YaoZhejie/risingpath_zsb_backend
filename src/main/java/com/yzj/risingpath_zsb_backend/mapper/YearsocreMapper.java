@@ -2,7 +2,7 @@ package com.yzj.risingpath_zsb_backend.mapper;
 
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.yzj.risingpath_zsb_backend.domain.request.YearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
 
 import java.util.List;
 
