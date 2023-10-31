@@ -4,13 +4,13 @@ spring:
   # DataSource Config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/risingpathdb
+    url: jdbc:mysql://106.54.176.247:3306/risingpathdb
     username: root
-    password: yourPassword
+    password: yzj0512
   redis:
     port: 6379
-    password: yourPassword
-    host: localhost
+    password: 740425
+    host: 106.54.176.247
     database: 0
   # session ????
   session:
