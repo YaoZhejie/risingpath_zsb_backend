@@ -5,18 +5,19 @@ import com.yzj.risingpath_zsb_backend.common.ErrorCode;
 import com.yzj.risingpath_zsb_backend.common.ResultUtils;
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
 import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.dto.ProfessionInfoRequest;
 import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.vo.ScoreAndProfessinfoVo;
 import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
-import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -27,14 +28,40 @@ public class YearscoreController {
     @Resource
     private YearsocreService yearsocreService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+//    @Autowired
+//    private RedisTemplate redisTemplate;
+
     /**
-     * 查询所有专业分数线
+     * 根据学校名模糊查询分数
      */
-    @GetMapping(value = "/allyearscore")
-    public List<YearScoreRequest> allyearscore(HttpServletRequest request) {
-        return yearsocreService.allYearScore();
+    @ApiOperation("根据学校名模糊查询分数")
+    @GetMapping(value = "/scoreLikeSchoolName")
+    public BaseResponse<List<ScoreAndProfessinfoVo>> ScoreLikeSchoolName(ProfessionInfoRequest professionInfoRequest) {
+        String schoolName = professionInfoRequest.getSchoolName();
+        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreBySchoolName(schoolName);
+        return ResultUtils.success(list);
+    }
+
+    /**
+     * 根据专业名模糊查询院校
+     */
+    @ApiOperation("根据专业名模糊查询分数")
+    @GetMapping(value = "/scoreLikeProfessinfo")
+    public BaseResponse<List<ScoreAndProfessinfoVo>> scoreLikeProfessinfo(ProfessionInfoRequest professionInfoRequest) {
+        String professName = professionInfoRequest.getProfessName();
+        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreByProfessinfo(professName);
+        return ResultUtils.success(list);
+    }
+
+    /**
+     * 根据备注名模糊查询分数
+     */
+    @ApiOperation("根据备注名模糊查询分数")
+    @GetMapping(value = "/scoreLikeRemarks")
+    public BaseResponse<List<ScoreAndProfessinfoVo>> scoreLikeRemarks(ProfessionInfoRequest professionInfoRequest) {
+        String remarks = professionInfoRequest.getRemarks();
+        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreByRemarks(remarks);
+        return ResultUtils.success(list);
     }
 
     /**

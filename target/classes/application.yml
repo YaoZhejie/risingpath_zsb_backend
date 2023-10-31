@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: risingpath_zsb_backend
+  # DataSource Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.54.176.247:3306/risingpathdb
+    username: root
+    password: yzj0512
+  redis:
+    port: 6379
+    password: 740425
+    host: 106.54.176.247
+    database: 0
+  # session ????
+  session:
+    timeout: 86400
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 日志输出到控制台
+    sql-format: true # 格式化输出 SQL 语句
+    default-time-type-handler: com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler
+#  global-config:
+#    db-config:
+#      logic-delete-field: isDelete # ????????????(since 3.3.0,????????????2)
+#      logic-delete-value: 1 # ??????(??? 1)
+#      logic-not-delete-value: 0 # ??????(??? 0)
+  server:
+    servlet:
+      session:
+        timeout=7200:

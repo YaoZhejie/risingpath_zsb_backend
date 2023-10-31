@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,10 +13,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 
  * @TableName professinfo
  */
-@TableName(value ="professinfo")
+@TableName(value = "professinfo")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class Professinfo implements Serializable {
     /**
      * 专业信息表id
      */
-    @TableId(type = IdType.AUTO )
+    @TableId(type = IdType.AUTO)
     private Integer proId;
 
     /**
@@ -35,6 +35,10 @@ public class Professinfo implements Serializable {
      * 院校id
      */
     private Integer schoolId;
+    /**
+     * 专业代码
+     */
+    private String proCode;
 
     /**
      * 专业名名称
@@ -52,7 +56,7 @@ public class Professinfo implements Serializable {
     private Integer troublePlan;
 
     /**
-     *  免试计划数
+     * 免试计划数
      */
     private Integer soldierPlan;
 
@@ -75,18 +79,4 @@ public class Professinfo implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
-    public Professinfo(Professinfo professinfo) {
-        if (Objects.nonNull(professinfo)){
-            this.proId = professinfo.proId;
-            this.type = professinfo.type;
-            this.schoolId = professinfo.schoolId;
-            this.professName = professinfo.professName;
-            this.totalPlan = professinfo.totalPlan;
-            this.troublePlan = professinfo.troublePlan;
-            this.soldierPlan = professinfo.soldierPlan;
-            this.tuition = professinfo.tuition;
-            this.englishReq = professinfo.englishReq;
-            this.remarks = professinfo.remarks;
-        }
-    }
 }

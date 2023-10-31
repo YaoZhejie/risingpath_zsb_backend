@@ -4,8 +4,9 @@ import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreRequest;
 import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.vo.ScoreAndProfessinfoVo;
 import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
-import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,21 +17,38 @@ import java.util.List;
 */
 public interface YearsocreService extends IService<Yearsocre> {
 
-    /**
-     * 返回近三年分数线
-     * @return
-     */
-    public List<YearScoreRequest> allYearScore();
+
 
     /**
      * 根据专业Id查询学校分数
      */
-    public List<Yearsocre> ScoreByProId(Integer proId);
+     List<Yearsocre> ScoreByProId(Integer proId);
 
 
     List<YearScoreVo> getYearScoreBySchool(Integer sid, Integer proId);
 
+    /**
+     * 保存分数
+     */
    Boolean saveYearScore(AddYearScoreRequest addYearScoreRequest);
 
+    /**
+     * 更新分数
+     */
    Boolean updateYearScore(PutYearScoreRequest putYearScoreRequest);
+
+    /**
+     *根据学校名模糊查询分数
+     */
+    List<ScoreAndProfessinfoVo> getScoreBySchoolName(@Param("schoolName") String schoolName);
+
+    /**
+     * 根据专业名模糊查询分数
+     */
+    List<ScoreAndProfessinfoVo> getScoreByProfessinfo(@Param("professName") String professName);
+
+    /**
+     * 根据报考要求模糊查询分数
+     */
+    List<ScoreAndProfessinfoVo> getScoreByRemarks(@Param("remarks") String remarks);
 }

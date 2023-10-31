@@ -1,5 +1,6 @@
 package com.yzj.risingpath_zsb_backend.domain.vo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.yzj.risingpath_zsb_backend.domain.Professinfo;
 import lombok.Data;
@@ -14,9 +15,10 @@ public class ProfessionAndSchoolVo implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
+    @ExcelProperty("")
    private String schoolName;
 
-   private String SchoolCode;
+   private String schoolCode;
 
 
     /**
@@ -29,8 +31,16 @@ public class ProfessionAndSchoolVo implements Serializable {
      */
     private Integer schoolId;
 
+  /**
+   * 专业id
+   */
+    private Integer proId;
     /**
-     * 专业名名称
+     * 专业代码
+     */
+    private String proCode;
+ /**
+  * 专业名名称
      */
     private String professName;
 

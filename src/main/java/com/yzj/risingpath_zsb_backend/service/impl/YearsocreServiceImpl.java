@@ -8,11 +8,11 @@ import com.yzj.risingpath_zsb_backend.domain.School;
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
 import com.yzj.risingpath_zsb_backend.domain.dto.AddYearScoreRequest;
 import com.yzj.risingpath_zsb_backend.domain.dto.PutYearScoreRequest;
+import com.yzj.risingpath_zsb_backend.domain.vo.ScoreAndProfessinfoVo;
 import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.mapper.ProfessinfoMapper;
 import com.yzj.risingpath_zsb_backend.mapper.SchoolMapper;
-import com.yzj.risingpath_zsb_backend.domain.dto.YearScoreRequest;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import com.yzj.risingpath_zsb_backend.mapper.YearsocreMapper;
 import org.springframework.beans.BeanUtils;
@@ -36,23 +36,11 @@ public class YearsocreServiceImpl extends ServiceImpl<YearsocreMapper, Yearsocre
     @Resource
     private YearsocreMapper yearsocreMapper;
 
-
     @Resource
     private SchoolMapper schoolMapper;
 
-
     @Resource
     private ProfessinfoMapper professinfoMapper;
-
-    /**
-     * 返回所有的专业分数
-     *
-     * @return
-     */
-    @Override
-    public List<YearScoreRequest> allYearScore() {
-        return yearsocreMapper.allYearScore();
-    }
 
 
     /**
@@ -133,6 +121,21 @@ public class YearsocreServiceImpl extends ServiceImpl<YearsocreMapper, Yearsocre
         yearsocre.setSchoolId(schoolId.getSchoolId());
         yearsocre.setProId(professinfo.getProId());
         return this.updateById(yearsocre);
+    }
+
+    @Override
+    public List<ScoreAndProfessinfoVo> getScoreBySchoolName(String schoolName) {
+        return yearsocreMapper.getScoreBySchoolName(schoolName);
+    }
+
+    @Override
+    public List<ScoreAndProfessinfoVo> getScoreByProfessinfo(String professName) {
+        return yearsocreMapper.getScoreByProfessinfo(professName);
+    }
+
+    @Override
+    public List<ScoreAndProfessinfoVo> getScoreByRemarks(String remarks) {
+        return yearsocreMapper.getScoreByRemarks(remarks);
     }
 
 

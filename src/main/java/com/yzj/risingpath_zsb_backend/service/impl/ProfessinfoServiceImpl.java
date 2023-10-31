@@ -1,25 +1,15 @@
 package com.yzj.risingpath_zsb_backend.service.impl;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.yzj.risingpath_zsb_backend.common.ErrorCode;
 import com.yzj.risingpath_zsb_backend.domain.Professinfo;
-import com.yzj.risingpath_zsb_backend.domain.School;
-import com.yzj.risingpath_zsb_backend.domain.dto.ProfessionInfoRequest;
-import com.yzj.risingpath_zsb_backend.domain.vo.ProfessionAndSchoolVo;
-import com.yzj.risingpath_zsb_backend.exception.BusinessException;
-import com.yzj.risingpath_zsb_backend.mapper.SchoolMapper;
+import com.yzj.risingpath_zsb_backend.domain.vo.*;
 import com.yzj.risingpath_zsb_backend.service.ProfessinfoService;
 import com.yzj.risingpath_zsb_backend.mapper.ProfessinfoMapper;
-import io.swagger.annotations.ApiOperation;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 
 /**
@@ -33,27 +23,6 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
 
     @Resource
     private ProfessinfoMapper professinfoMapper;
-
-    @Resource
-    private SchoolMapper schoolMapper;
-
-    @Override
-    public List<Professinfo> allProfessinfo() {
-        return professinfoMapper.allProfessinfo();
-    }
-
-
-
-
-    @Override
-    public List<Professinfo> professLikeRemark(String remark) {
-        return professinfoMapper.professLikeRemark(remark);
-    }
-
-    @Override
-    public List<Professinfo> professLikeSchoolName(String schoolName) {
-        return professinfoMapper.professLikeSchoolName(schoolName);
-    }
 
     /**
      * 根据学校id查询专业信息
@@ -69,8 +38,86 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
         return list;
     }
 
+    @Override
+    public int countDistinctProfession() {
+        return professinfoMapper.countDistinctProfession();
+    }
 
+    @Override
+    public int CountAllTotalPlan() {
+        return professinfoMapper.CountAllTotalPlan();
+    }
 
+    @Override
+    public int SumPublicProfession() {
+        return professinfoMapper.SumPublicProfession();
+    }
+
+    @Override
+    public int SumPrivateProfession() {
+        return professinfoMapper.SumPrivateProfession();
+    }
+
+    @Override
+    public List<ProfessionTypeVo> getCountOfMajorsByType() {
+        return professinfoMapper.getCountOfMajorsByType();
+    }
+
+    @Override
+    public List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(String schoolName) {
+        return professinfoMapper.selectProfessInfoBySchoolName(schoolName);
+    }
+
+    @Override
+    public List<ProfessionAndSchoolVo> selectProfessInfoByPro(String professName) {
+        return professinfoMapper.selectProfessInfoByPro(professName);
+    }
+
+    @Override
+    public List<ProfessionAndSchoolVo> selectProfessInfoByRemarks(String remarks) {
+        return professinfoMapper.selectProfessInfoByRemarks(remarks);
+    }
+
+    @Override
+    public ProfessionAndSchoolVo selectProfessInfo(Integer proId, Integer schoolId) {
+        return professinfoMapper.selectProfessInfo(proId,schoolId);
+    }
+
+    @Override
+    public CollectOutput selectGenerateInfo(Integer proId, Integer schoolId) {
+        return professinfoMapper.selectGenerateInfo(proId,schoolId);
+    }
+
+    /**
+     * 获取对口一本志愿
+     */
+    @Override
+    public List<SmartVolunteerVo> getKeySchoolVolunteersMajor(String remarks) {
+        return professinfoMapper.getKeySchoolVolunteersMajor(remarks);
+    }
+
+    /**
+     *获取对口其他志愿
+     */
+    @Override
+    public List<SmartVolunteerVo> getPublicSchoolVolunteersMajor(String remarks) {
+        return professinfoMapper.getPublicSchoolVolunteersMajor(remarks);
+    }
+
+    @Override
+    public List<SmartVolunteerVo> getKeySchoolVolunteersNoMajor(String remarks) {
+        return professinfoMapper.getKeySchoolVolunteersNoMajor(remarks);
+    }
+
+    @Override
+    public List<SmartVolunteerVo> getPublicSchoolVolunteersNoMajor(String remarks) {
+        return professinfoMapper.getPublicSchoolVolunteersNoMajor(remarks);
+    }
+
+    @Override
+    public List<SimulationMajorVo> getSimulationMajorVo(@Param("remarks") String remarks,@Param("school") String schoolName,@Param("type") String type){
+        return professinfoMapper.getSimulationMajorVo(remarks,schoolName,type);
+    }
 
 
 }

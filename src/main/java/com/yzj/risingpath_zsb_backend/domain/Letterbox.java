@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,16 +12,15 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
- * 
  * @TableName letterbox
  */
-@TableName(value ="letterbox")
+@TableName(value = "letterbox")
 @Data
 public class Letterbox implements Serializable {
     /**
      * 信唯一标识
      */
-    @TableId(type = IdType.AUTO )
+    @TableId(type = IdType.AUTO)
     private Integer letterId;
 
     /**

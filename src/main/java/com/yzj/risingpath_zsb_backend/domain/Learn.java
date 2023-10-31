@@ -9,10 +9,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
- * 
  * @TableName learn
  */
-@TableName(value ="learn")
+@TableName(value = "learn")
 @Data
 public class Learn implements Serializable {
     /**
@@ -37,14 +36,14 @@ public class Learn implements Serializable {
     private String downloadLink;
 
     /**
-     * 
+     *
      */
     private String code;
 
     /**
      * 发布时间
      */
-    @TableField(fill= FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date publishTime;
 

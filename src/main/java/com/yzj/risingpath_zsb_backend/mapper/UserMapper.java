@@ -2,6 +2,7 @@ package com.yzj.risingpath_zsb_backend.mapper;
 
 import com.yzj.risingpath_zsb_backend.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
 * @author 姚浙杰

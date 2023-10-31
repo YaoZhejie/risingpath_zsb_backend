@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+
 @Data
 public class AddYearScoreRequest implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -33,14 +34,14 @@ public class AddYearScoreRequest implements Serializable {
     /**
      * 录取最高分
      */
-    @Max(value = 300,message = "分数必须小于300")
-    @Min(value = 0,message = "分数必须大于0")
+    @Max(value = 300, message = "分数必须小于300")
+    @Min(value = 0, message = "分数必须大于0")
     private Integer maxScore;
 
     /**
      * 录取最低分
      */
-    @Max(value = 300,message = "分数必须小于300")
-    @Min(value = 0,message = "分数必须大于0")
+    @Max(value = 300, message = "分数必须小于300")
+    @Min(value = 0, message = "分数必须大于0")
     private Integer minScore;
 }

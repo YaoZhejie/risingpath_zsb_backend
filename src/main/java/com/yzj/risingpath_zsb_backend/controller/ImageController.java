@@ -9,6 +9,7 @@ import com.yzj.risingpath_zsb_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +25,9 @@ import java.nio.file.Paths;
 
 @RestController
 public class ImageController {
-    private static final String UPLOAD_DIR = "static/";
+    @Autowired
+    private ResourceLoader resourceLoader;
+    private static final String UPLOAD_DIR = "src/main/resources/static/images/";
     @Autowired
     private UserService userService;
     /**
@@ -47,15 +50,23 @@ public class ImageController {
 
         //存储到数据库里的文件地址
         String storeAvatorPath = fileName;
+        // 获取资源
+        Resource resource = resourceLoader.getResource("file:src/main/resources/static/images");
+        // 获取文件夹路径
+        String folderPath = resource.getFile().getAbsolutePath();
+        //获取存储在数据库中文件名
+        String path = userService.selectById(id).getAvatarUrl();
+        // 创建文件对象，例如操作.jpg文件
+        File file_pic = new File(folderPath, path);
         //头像文件实际地址
-        String PicUrl = "static/" + userService.selectById(id).getAvatarUrl();
         User user = null;
+        //如果文件存在则删除头像
+        if (file_pic.exists()) {
+            file_pic.delete();
+        }else{
+            System.out.println("文件不存在");
+        }
         try {
-            File file_pic = new File(PicUrl);
-            //如果文件存在则删除
-            if (file_pic.exists()) {
-                file_pic.delete();
-            }
             user = new User();
             user.setUserId(id);
             user.setAvatarUrl(storeAvatorPath);
@@ -73,7 +84,7 @@ public class ImageController {
 
     @GetMapping("/avatorImages/{imageName}")
     public byte[] getImage(@PathVariable("imageName") String imageName) throws IOException {
-        Resource resource = new ClassPathResource("static/" + imageName);
+        Resource resource = new ClassPathResource("/static/" + "images/" + imageName);
         resource.getURI();
         InputStream inputStream = resource.getInputStream();
         return FileCopyUtils.copyToByteArray(inputStream);

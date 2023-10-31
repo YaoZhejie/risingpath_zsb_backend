@@ -4,20 +4,21 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
- * 
  * @TableName yearsocre
  */
-@TableName(value ="yearsocre")
+@TableName(value = "yearsocre")
 @Data
 public class Yearsocre implements Serializable {
     /**
      * 分数表id
      */
-    @TableId(type = IdType.AUTO )
+    @TableId(type = IdType.AUTO)
     private Integer scoreId;
 
     /**

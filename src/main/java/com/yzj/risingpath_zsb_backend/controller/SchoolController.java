@@ -13,6 +13,7 @@ import com.yzj.risingpath_zsb_backend.domain.User;
 import com.yzj.risingpath_zsb_backend.service.ProfessinfoService;
 import com.yzj.risingpath_zsb_backend.service.SchoolService;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -50,10 +51,8 @@ public class SchoolController {
 
     /**
      * 获取所有学校列表
-     *
-     * @param request
-     * @return
      */
+    @ApiOperation("返回所有学校")
     @GetMapping("/allSchool")
     public List<School> allSchool(HttpServletRequest request) {
         //判断是否为管理员
@@ -64,14 +63,13 @@ public class SchoolController {
     }
 
 
-
-
     /**
      * 更新学校信息
      * @param school
      * @param request
      * @return
      */
+    @ApiOperation("更新学校信息")
     @PutMapping(value="/update")
     public BaseResponse<Boolean> updateSchool(@RequestBody School school , HttpServletRequest request){
         if (!isAdmin(request)){
@@ -91,6 +89,7 @@ public class SchoolController {
      * @param request
      * @return
      */
+    @ApiOperation("添加学校")
     @PostMapping(value = "/insert")
     public BaseResponse<Boolean> schoolInsert(@RequestBody School school, HttpServletRequest request) {
         if (!isAdmin(request)) {
@@ -112,7 +111,7 @@ public class SchoolController {
      * @param request
      * @return
      */
-
+    @ApiOperation("删除学校")
     @PostMapping(value = "/delete")
     public BaseResponse<Boolean> deleteLearn(@RequestBody School school, HttpServletRequest request) {
         //验证是否为管理员

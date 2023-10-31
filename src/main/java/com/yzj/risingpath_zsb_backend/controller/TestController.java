@@ -14,7 +14,7 @@ public class TestController {
     private RedisTemplate redisTemplate;
 
     @PostMapping("/set")
-    public void set(@RequestBody User user){
-        redisTemplate.opsForValue().set("user",user);
+    public void set(@RequestBody User user) {
+        redisTemplate.opsForValue().set("user", user);
     }
 }

@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yzj.risingpath_zsb_backend.domain.School;
 import com.yzj.risingpath_zsb_backend.service.SchoolService;
 import com.yzj.risingpath_zsb_backend.mapper.SchoolMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @author 姚浙杰
@@ -15,6 +19,31 @@ import org.springframework.stereotype.Service;
 public class SchoolServiceImpl extends ServiceImpl<SchoolMapper, School>
     implements SchoolService{
 
+    @Resource
+    private SchoolMapper schoolMapper;
+
+    /**
+     * 公办数量
+     * @return
+     */
+    @Override
+    public int getPublicSchoolCount() {
+        return schoolMapper.getPublicSchoolCount();
+    }
+
+    /**
+     * 民办数量
+     * @return
+     */
+    @Override
+    public int getPrivateSchoolCount() {
+        return schoolMapper.getPrivateSchoolCount();
+    }
+
+    @Override
+    public List<School> getSchoolForSim(@Param("remarks") String remarks, @Param("type") String type) {
+        return schoolMapper.getSchoolForSim(remarks,type);
+    }
 }
 
 
