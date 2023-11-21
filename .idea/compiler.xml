@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="risingpath_zsb_backend" target="11" />
+      <module name="risingpath_zsb_backend" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

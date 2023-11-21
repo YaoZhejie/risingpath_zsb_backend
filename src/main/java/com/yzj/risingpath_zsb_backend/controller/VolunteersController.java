@@ -76,9 +76,10 @@ public class VolunteersController {
         DivideGrade grade = new DivideGrade();
 //        System.out.println(request.getHours());
         String remarks = request.getRemarks();
-        ModelPredictor predictor = new ModelPredictor();
-        //获取ai预测的分数
-        Integer score = predictor.getAiScore(request);
+//        ModelPredictor predictor = new ModelPredictor();
+//        //获取ai预测的分数
+//        Integer score = predictor.getAiScore(request);
+        Integer score = request.getScore();
         if (score==0){
             score = request.getScore();
         }

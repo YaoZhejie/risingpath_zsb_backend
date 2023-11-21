@@ -16,7 +16,7 @@
     <description>risingpath_zsb_backend</description>
     <properties>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>
