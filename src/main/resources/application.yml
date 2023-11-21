@@ -1,7 +1,7 @@
 spring:
   application:
     name: risingpath_zsb_backend
-  # DataSource Config 不要写自己服务器地址
+  # DataSource Config 不要写自己服务器地址 被面试官批评了呜呜呜
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://XXXXXXX:3306/risingpathdb
