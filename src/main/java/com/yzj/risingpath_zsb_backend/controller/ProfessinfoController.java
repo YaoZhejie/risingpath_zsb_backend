@@ -5,16 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yzj.risingpath_zsb_backend.common.BaseResponse;
 import com.yzj.risingpath_zsb_backend.common.ErrorCode;
 import com.yzj.risingpath_zsb_backend.common.ResultUtils;
-import com.yzj.risingpath_zsb_backend.contant.CommonConstant;
 import com.yzj.risingpath_zsb_backend.domain.Professinfo;
-import com.yzj.risingpath_zsb_backend.domain.School;
 import com.yzj.risingpath_zsb_backend.domain.Yearsocre;
 import com.yzj.risingpath_zsb_backend.domain.dto.ProfessionInfoRequest;
 import com.yzj.risingpath_zsb_backend.domain.vo.ProfessionAndSchoolVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.domain.User;
 import com.yzj.risingpath_zsb_backend.service.ProfessinfoService;
-import com.yzj.risingpath_zsb_backend.service.SchoolService;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +49,23 @@ public class ProfessinfoController {
     @GetMapping("/likeSchoolName")
     public BaseResponse<List<ProfessionAndSchoolVo>> likeSchoolName(ProfessionInfoRequest professionInfoRequest) {
         String schoolName = professionInfoRequest.getSchoolName();
-        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoBySchoolName(schoolName);
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoBySchoolName(schoolName, current, pageSize);
         return ResultUtils.success(List);
+    }
+
+    @ApiOperation("学校名模糊查询分页")
+    @PostMapping("/likeSchoolNameByPage")
+    public BaseResponse<Page<ProfessionAndSchoolVo>> likeSchoolNameByPage(@RequestBody ProfessionInfoRequest professionInfoRequest) {
+        String schoolName = professionInfoRequest.getSchoolName();
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        Integer total = professinfoService.selectProfessInfoBySchoolNameCount(schoolName);
+        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoBySchoolName(schoolName, current, pageSize);
+        Page<ProfessionAndSchoolVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(),total);
+        page.setRecords(List);
+        return ResultUtils.success(page);
     }
 
     @ApiOperation("专业名模糊查询")
@@ -148,6 +160,7 @@ public class ProfessinfoController {
         }
         return ResultUtils.success(flagProDelete);
     }
+
     @ApiOperation("通过学校id查询专业")
     @GetMapping("/selectProfessionBySchoolId/{sid}")
     public BaseResponse<List<Professinfo>> selectProfessionBySchoolId(@PathVariable Integer sid) {

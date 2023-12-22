@@ -4,10 +4,7 @@ import com.yzj.risingpath_zsb_backend.contant.CommonConstant;
 import lombok.Data;
 
 /**
- * 分页请求
- *
- * @author https://github.com/liyupi
- */
+ * 分页请求*/
 @Data
 public class PageRequest {
 

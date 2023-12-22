@@ -34,8 +34,7 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
     public List<Professinfo> professBySchoolId(Integer schoolId) {
         QueryWrapper<Professinfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("schoolId", schoolId);
-        List<Professinfo> list = professinfoMapper.selectList(queryWrapper);
-        return list;
+        return professinfoMapper.selectList(queryWrapper);
     }
 
     @Override
@@ -64,8 +63,13 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
     }
 
     @Override
-    public List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(String schoolName) {
-        return professinfoMapper.selectProfessInfoBySchoolName(schoolName);
+    public List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(String schoolName,Integer current, Integer pageSize) {
+        return professinfoMapper.selectProfessInfoBySchoolName(schoolName,current,pageSize);
+    }
+
+    @Override
+    public Integer selectProfessInfoBySchoolNameCount(String schoolName) {
+        return this.baseMapper.selectProfessInfoBySchoolNameCount(schoolName);
     }
 
     @Override

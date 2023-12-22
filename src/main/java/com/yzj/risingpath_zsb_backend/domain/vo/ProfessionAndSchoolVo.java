@@ -12,13 +12,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class ProfessionAndSchoolVo implements Serializable {
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
     @ExcelProperty("")
-   private String schoolName;
+    private String schoolName;
 
-   private String schoolCode;
+    private String schoolCode;
 
 
     /**
@@ -31,16 +30,16 @@ public class ProfessionAndSchoolVo implements Serializable {
      */
     private Integer schoolId;
 
-  /**
-   * 专业id
-   */
+    /**
+     * 专业id
+     */
     private Integer proId;
     /**
      * 专业代码
      */
     private String proCode;
- /**
-  * 专业名名称
+    /**
+     * 专业名名称
      */
     private String professName;
 
@@ -55,7 +54,7 @@ public class ProfessionAndSchoolVo implements Serializable {
     private Integer troublePlan;
 
     /**
-     *  免试计划数
+     * 免试计划数
      */
     private Integer soldierPlan;
 
@@ -74,6 +73,6 @@ public class ProfessionAndSchoolVo implements Serializable {
      */
     private String remarks;
 
-
+    private Integer total;
 
 }

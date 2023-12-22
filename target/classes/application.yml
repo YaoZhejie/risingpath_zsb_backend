@@ -1,16 +1,16 @@
 spring:
   application:
     name: risingpath_zsb_backend
-  # DataSource Config
+  # DataSource Config 不要写自己服务器地址 被面试官批评了呜呜呜
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://106.54.176.247:3306/risingpathdb
     username: root
-    password: yzj0512
+    password: woaini123
   redis:
     port: 6379
     password: 740425
-    host: 106.54.176.247
+    host:  106.54.176.247
     database: 0
   # session ????
   session:

@@ -18,8 +18,6 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
 
     /**
      * 不重复的专业的数量
-     *
-     * @return
      */
     @Select("SELECT COUNT(DISTINCT professName) FROM professinfo")
     int countDistinctProfession();
@@ -32,8 +30,6 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
 
     /**
      * 公办专业总人数
-     *
-     * @return
      */
     @Select("SELECT SUM(totalPlan) \n" +
             "FROM school,professinfo\n" +
@@ -43,8 +39,6 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
 
     /**
      * 民办专业总人数
-     *
-     * @return
      */
     @Select("SELECT SUM(totalPlan) \n" +
             "FROM school,professinfo\n" +
@@ -66,8 +60,18 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
             "FROM professinfo, school " +
             "WHERE professinfo.schoolId = school.schoolId " +
             "<if test='schoolName != null and schoolName.length>0'>AND school.schoolName LIKE CONCAT('%', #{schoolName}, '%')</if>" +
+            "limit #{current},#{pageSize}" +
             "</script>")
-    List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(@Param("schoolName") String schoolName);
+    List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(@Param("schoolName") String schoolName, @Param("current") int current, @Param("pageSize") int pageSize);
+
+    @Select("<script>" +
+            "SELECT COUNT(*) " +
+            "FROM professinfo, school " +
+            "WHERE professinfo.schoolId = school.schoolId " +
+            "<if test='schoolName != null and schoolName.length>0'>AND school.schoolName LIKE CONCAT('%', #{schoolName}, '%')</if>" +
+            "</script>")
+    Integer selectProfessInfoBySchoolNameCount(@Param("schoolName") String schoolName);
+
 
     @Select("<script>" +
             "SELECT professinfo.type, professinfo.schoolId,professinfo.proCode,professinfo.proId, school.schoolCode, school.schoolName, " +
@@ -78,6 +82,7 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
             "<if test='professName != null and professName.length>0'>AND professinfo.professName LIKE CONCAT('%', #{professName}, '%')</if>" +
             "</script>")
     List<ProfessionAndSchoolVo> selectProfessInfoByPro(@Param("professName") String professName);
+
 
     @Select("SELECT DISTINCT professinfo.type,professinfo.schoolId,professinfo.proCode, professinfo.proId, school.schoolCode, school.schoolName, " +
             "professinfo.professName, professinfo.totalPlan, professinfo.troublePlan, professinfo.soldierPlan, " +
