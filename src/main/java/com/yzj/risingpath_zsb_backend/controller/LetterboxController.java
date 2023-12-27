@@ -53,8 +53,6 @@ public class LetterboxController {
 
     /**
      * 删除信件（只有管理员才可以删除信件）
-     *
-     * @param id
      * @param request
      * @return
      */

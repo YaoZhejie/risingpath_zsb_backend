@@ -1,5 +1,6 @@
 package com.yzj.risingpath_zsb_backend.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yzj.risingpath_zsb_backend.common.BaseResponse;
 import com.yzj.risingpath_zsb_backend.common.ErrorCode;
 import com.yzj.risingpath_zsb_backend.common.ResultUtils;
@@ -12,8 +13,6 @@ import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,33 +34,48 @@ public class YearscoreController {
      * 根据学校名模糊查询分数
      */
     @ApiOperation("根据学校名模糊查询分数")
-    @GetMapping(value = "/scoreLikeSchoolName")
-    public BaseResponse<List<ScoreAndProfessinfoVo>> ScoreLikeSchoolName(ProfessionInfoRequest professionInfoRequest) {
+    @PostMapping(value = "/scoreLikeSchoolName")
+    public BaseResponse<Page<ScoreAndProfessinfoVo>> ScoreLikeSchoolName(@RequestBody ProfessionInfoRequest professionInfoRequest) {
         String schoolName = professionInfoRequest.getSchoolName();
-        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreBySchoolName(schoolName);
-        return ResultUtils.success(list);
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        Integer total = yearsocreService.selectScoreBySchoolNameCount(schoolName);
+        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreBySchoolName(schoolName,current, pageSize);
+        Page<ScoreAndProfessinfoVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(), total);
+        page.setRecords(list);
+        return ResultUtils.success(page);
     }
 
     /**
      * 根据专业名模糊查询院校
      */
     @ApiOperation("根据专业名模糊查询分数")
-    @GetMapping(value = "/scoreLikeProfessinfo")
-    public BaseResponse<List<ScoreAndProfessinfoVo>> scoreLikeProfessinfo(ProfessionInfoRequest professionInfoRequest) {
+    @PostMapping(value = "/scoreLikeProfessinfo")
+    public BaseResponse<Page<ScoreAndProfessinfoVo>> scoreLikeProfessinfo(@RequestBody ProfessionInfoRequest professionInfoRequest) {
         String professName = professionInfoRequest.getProfessName();
-        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreByProfessinfo(professName);
-        return ResultUtils.success(list);
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        Integer total = yearsocreService.selectScoreByProfessNameCount(professName);
+        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreByProfessinfo(professName,current,pageSize);
+        Page<ScoreAndProfessinfoVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(), total);
+        page.setRecords(list);
+        return ResultUtils.success(page);
     }
 
     /**
      * 根据备注名模糊查询分数
      */
     @ApiOperation("根据备注名模糊查询分数")
-    @GetMapping(value = "/scoreLikeRemarks")
-    public BaseResponse<List<ScoreAndProfessinfoVo>> scoreLikeRemarks(ProfessionInfoRequest professionInfoRequest) {
+    @PostMapping(value = "/scoreLikeRemarks")
+    public BaseResponse<Page<ScoreAndProfessinfoVo>> scoreLikeRemarks(@RequestBody ProfessionInfoRequest professionInfoRequest) {
         String remarks = professionInfoRequest.getRemarks();
-        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreByRemarks(remarks);
-        return ResultUtils.success(list);
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        Integer total = yearsocreService.selectSocreByRemarkCount(remarks);
+        List<ScoreAndProfessinfoVo> list = yearsocreService.getScoreByRemarks(remarks,current,pageSize);
+        Page<ScoreAndProfessinfoVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(), total);
+        page.setRecords(list);
+        return ResultUtils.success(page);
     }
 
     /**
@@ -110,6 +124,8 @@ public class YearscoreController {
     public BaseResponse<Boolean> saveYearScore(@Validated @RequestBody AddYearScoreRequest yearScoreDto) {
         return ResultUtils.success(yearsocreService.saveYearScore(yearScoreDto));
     }
+
+
 
 
 }

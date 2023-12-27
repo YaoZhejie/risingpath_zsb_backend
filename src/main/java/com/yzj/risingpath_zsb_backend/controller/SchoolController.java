@@ -15,6 +15,7 @@ import com.yzj.risingpath_zsb_backend.service.SchoolService;
 import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -65,14 +66,15 @@ public class SchoolController {
 
     /**
      * 更新学校信息
+     *
      * @param school
      * @param request
      * @return
      */
     @ApiOperation("更新学校信息")
-    @PutMapping(value="/update")
-    public BaseResponse<Boolean> updateSchool(@RequestBody School school , HttpServletRequest request){
-        if (!isAdmin(request)){
+    @PutMapping(value = "/update")
+    public BaseResponse<Boolean> updateSchool(@RequestBody School school, HttpServletRequest request) {
+        if (!isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH);
         }
         //验证参数是否为空
@@ -80,11 +82,12 @@ public class SchoolController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         boolean result = schoolService.updateById(school);
-        return  ResultUtils.success(result);
+        return ResultUtils.success(result);
     }
 
     /**
      * 增加学校
+     *
      * @param school
      * @param request
      * @return
@@ -120,7 +123,7 @@ public class SchoolController {
         }
         int schoolId = school.getSchoolId();
         //删除学校
-        Boolean flagSchoolDelete = schoolService.removeById(schoolId);
+        schoolService.removeById(schoolId);
 
         //获取和学校id相同的专业信息
         List<Professinfo> professinfoList = professinfoService.professBySchoolId(schoolId);
@@ -133,14 +136,11 @@ public class SchoolController {
             QueryWrapper<Yearsocre> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("proId", proId)
                     .eq("schoolId", schoolId);
-            Boolean flagScoreDelete = yearsocreService.remove(queryWrapper);
+            yearsocreService.remove(queryWrapper);
         }
 
         return ResultUtils.success(true);
     }
-
-
-
 
 
 }

@@ -13,8 +13,8 @@ import com.yzj.risingpath_zsb_backend.domain.vo.YearScoreVo;
 import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.mapper.ProfessinfoMapper;
 import com.yzj.risingpath_zsb_backend.mapper.SchoolMapper;
-import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import com.yzj.risingpath_zsb_backend.mapper.YearsocreMapper;
+import com.yzj.risingpath_zsb_backend.service.YearsocreService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -124,18 +124,33 @@ public class YearsocreServiceImpl extends ServiceImpl<YearsocreMapper, Yearsocre
     }
 
     @Override
-    public List<ScoreAndProfessinfoVo> getScoreBySchoolName(String schoolName) {
-        return yearsocreMapper.getScoreBySchoolName(schoolName);
+    public List<ScoreAndProfessinfoVo> getScoreBySchoolName(String schoolName,Integer current, Integer pageSize) {
+        return yearsocreMapper.getScoreBySchoolName(schoolName,current,pageSize);
     }
 
     @Override
-    public List<ScoreAndProfessinfoVo> getScoreByProfessinfo(String professName) {
-        return yearsocreMapper.getScoreByProfessinfo(professName);
+    public List<ScoreAndProfessinfoVo> getScoreByProfessinfo(String professName,Integer current, Integer pageSize) {
+        return yearsocreMapper.getScoreByProfessinfo(professName,current,pageSize);
     }
 
     @Override
-    public List<ScoreAndProfessinfoVo> getScoreByRemarks(String remarks) {
-        return yearsocreMapper.getScoreByRemarks(remarks);
+    public List<ScoreAndProfessinfoVo> getScoreByRemarks(String remarks,Integer current, Integer pageSize) {
+        return yearsocreMapper.getScoreByRemarks(remarks,current,pageSize);
+    }
+
+    @Override
+    public Integer selectScoreBySchoolNameCount(String schoolName) {
+        return this.baseMapper.selectScoreBySchoolNameCount(schoolName);
+    }
+
+    @Override
+    public Integer selectScoreByProfessNameCount(String professName) {
+        return this.baseMapper.selectScoreByProfessNameCount(professName);
+    }
+
+    @Override
+    public Integer selectSocreByRemarkCount(String remarks) {
+        return this.baseMapper.selectSocreByRemarkCount(remarks);
     }
 
 

@@ -8,6 +8,7 @@ import com.yzj.risingpath_zsb_backend.service.ProfessinfoService;
 import com.yzj.risingpath_zsb_backend.mapper.ProfessinfoMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -63,8 +64,8 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
     }
 
     @Override
-    public List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(String schoolName,Integer current, Integer pageSize) {
-        return professinfoMapper.selectProfessInfoBySchoolName(schoolName,current,pageSize);
+    public List<ProfessionAndSchoolVo> selectProfessInfoBySchoolName(String schoolName, Integer current, Integer pageSize) {
+        return professinfoMapper.selectProfessInfoBySchoolName(schoolName, current, pageSize);
     }
 
     @Override
@@ -73,23 +74,23 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
     }
 
     @Override
-    public List<ProfessionAndSchoolVo> selectProfessInfoByPro(String professName) {
-        return professinfoMapper.selectProfessInfoByPro(professName);
+    public List<ProfessionAndSchoolVo> selectProfessInfoByPro(String professName, Integer current, Integer pageSize) {
+        return professinfoMapper.selectProfessInfoByPro(professName, current, pageSize);
     }
 
     @Override
-    public List<ProfessionAndSchoolVo> selectProfessInfoByRemarks(String remarks) {
-        return professinfoMapper.selectProfessInfoByRemarks(remarks);
+    public List<ProfessionAndSchoolVo> selectProfessInfoByRemarks(String remarks, Integer current, Integer pageSize) {
+        return professinfoMapper.selectProfessInfoByRemarks(remarks, current, pageSize);
     }
 
     @Override
     public ProfessionAndSchoolVo selectProfessInfo(Integer proId, Integer schoolId) {
-        return professinfoMapper.selectProfessInfo(proId,schoolId);
+        return professinfoMapper.selectProfessInfo(proId, schoolId);
     }
 
     @Override
     public CollectOutput selectGenerateInfo(Integer proId, Integer schoolId) {
-        return professinfoMapper.selectGenerateInfo(proId,schoolId);
+        return professinfoMapper.selectGenerateInfo(proId, schoolId);
     }
 
     /**
@@ -101,7 +102,7 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
     }
 
     /**
-     *获取对口其他志愿
+     * 获取对口其他志愿
      */
     @Override
     public List<SmartVolunteerVo> getPublicSchoolVolunteersMajor(String remarks) {
@@ -119,8 +120,18 @@ public class ProfessinfoServiceImpl extends ServiceImpl<ProfessinfoMapper, Profe
     }
 
     @Override
-    public List<SimulationMajorVo> getSimulationMajorVo(@Param("remarks") String remarks,@Param("school") String schoolName,@Param("type") String type){
-        return professinfoMapper.getSimulationMajorVo(remarks,schoolName,type);
+    public List<SimulationMajorVo> getSimulationMajorVo(@Param("remarks") String remarks, @Param("school") String schoolName, @Param("type") String type) {
+        return professinfoMapper.getSimulationMajorVo(remarks, schoolName, type);
+    }
+
+    @Override
+    public int selectProfessInfoByProNameCount(String professionName) {
+        return this.baseMapper.selectProfessInfoByProNameCount(professionName);
+    }
+
+    @Override
+    public int selectProfessInfoByRemarkCount(String remarks) {
+        return this.baseMapper.selectProfessInfoByRemarkCount(remarks);
     }
 
 

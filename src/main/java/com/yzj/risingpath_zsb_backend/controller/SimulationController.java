@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @RestController
@@ -83,6 +84,8 @@ public class SimulationController {
             redisTemplate.delete("simCache" + userId);
         }
         Object previousValue = valueOperations.getAndSet("simCache" + userId, simVolunteersCache);
+        //半小时后缓存过期
+        redisTemplate.expire("simCache" + userId, 1800, TimeUnit.SECONDS);
         boolean isCacheSaved = (previousValue == null);
         return ResultUtils.success(isCacheSaved);
     }
