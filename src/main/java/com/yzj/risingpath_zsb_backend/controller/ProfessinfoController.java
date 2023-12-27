@@ -45,16 +45,6 @@ public class ProfessinfoController {
     private RedisTemplate redisTemplate;
 
 
-    @ApiOperation("学校名模糊查询")
-    @GetMapping("/likeSchoolName")
-    public BaseResponse<List<ProfessionAndSchoolVo>> likeSchoolName(ProfessionInfoRequest professionInfoRequest) {
-        String schoolName = professionInfoRequest.getSchoolName();
-        int pageSize = professionInfoRequest.getPageSize();
-        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
-        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoBySchoolName(schoolName, current, pageSize);
-        return ResultUtils.success(List);
-    }
-
     @ApiOperation("学校名模糊查询分页")
     @PostMapping("/likeSchoolNameByPage")
     public BaseResponse<Page<ProfessionAndSchoolVo>> likeSchoolNameByPage(@RequestBody ProfessionInfoRequest professionInfoRequest) {
@@ -63,25 +53,35 @@ public class ProfessinfoController {
         int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
         Integer total = professinfoService.selectProfessInfoBySchoolNameCount(schoolName);
         List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoBySchoolName(schoolName, current, pageSize);
-        Page<ProfessionAndSchoolVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(),total);
+        Page<ProfessionAndSchoolVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(), total);
         page.setRecords(List);
         return ResultUtils.success(page);
     }
 
     @ApiOperation("专业名模糊查询")
-    @GetMapping("/likeProfessinfo")
-    public BaseResponse<List<ProfessionAndSchoolVo>> likeProfession(ProfessionInfoRequest professionInfoRequest) {
+    @PostMapping("/likeProfessinfo")
+    public BaseResponse<Page<ProfessionAndSchoolVo>> likeProfession(@RequestBody ProfessionInfoRequest professionInfoRequest) {
         String professionName = professionInfoRequest.getProfessName();
-        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoByPro(professionName);
-        return ResultUtils.success(List);
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        int total = professinfoService.selectProfessInfoByProNameCount(professionName);
+        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoByPro(professionName, current, pageSize);
+        Page<ProfessionAndSchoolVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(), total);
+        page.setRecords(List);
+        return ResultUtils.success(page);
     }
 
     @ApiOperation("备注名模糊查询")
-    @GetMapping("/likeRemarks")
-    public BaseResponse<List<ProfessionAndSchoolVo>> likeRemarks(ProfessionInfoRequest professionInfoRequest) {
+    @PostMapping("/likeRemarks")
+    public BaseResponse<Page<ProfessionAndSchoolVo>> likeRemarks(@RequestBody ProfessionInfoRequest professionInfoRequest) {
         String remarks = professionInfoRequest.getRemarks();
-        List<ProfessionAndSchoolVo> List = professinfoService.selectProfessInfoByRemarks(remarks);
-        return ResultUtils.success(List);
+        int pageSize = professionInfoRequest.getPageSize();
+        int current = (professionInfoRequest.getCurrent() - 1) * pageSize;
+        int total = professinfoService.selectProfessInfoByRemarkCount(remarks);
+        List<ProfessionAndSchoolVo> list = professinfoService.selectProfessInfoByRemarks(remarks, current, pageSize);
+        Page<ProfessionAndSchoolVo> page = new Page<>(professionInfoRequest.getCurrent(), professionInfoRequest.getPageSize(), total);
+        page.setRecords(list);
+        return ResultUtils.success(page);
     }
 
 

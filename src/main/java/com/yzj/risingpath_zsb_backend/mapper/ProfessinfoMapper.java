@@ -72,6 +72,19 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
             "</script>")
     Integer selectProfessInfoBySchoolNameCount(@Param("schoolName") String schoolName);
 
+    @Select("<script>" +
+            "SELECT COUNT(*) " +
+            "FROM professinfo, school " +
+            "WHERE professinfo.schoolId = school.schoolId " +
+            "<if test='professName != null and professName.length>0'>AND professinfo.professName LIKE CONCAT('%', #{professName}, '%')</if>" +
+            "</script>")
+    Integer selectProfessInfoByProNameCount(@Param("professName") String professName);
+
+    @Select("SELECT DISTINCT COUNT(*)  " +
+            "FROM professinfo, school " +
+            "WHERE professinfo.schoolId = school.schoolId " +
+            "AND (professinfo.remarks LIKE CONCAT('%', #{remarks}, '%') OR LENGTH(professinfo.remarks) <= 51)")
+    Integer selectProfessInfoByRemarkCount(@Param("remarks") String remarks);
 
     @Select("<script>" +
             "SELECT professinfo.type, professinfo.schoolId,professinfo.proCode,professinfo.proId, school.schoolCode, school.schoolName, " +
@@ -80,17 +93,17 @@ public interface ProfessinfoMapper extends BaseMapper<Professinfo> {
             "FROM professinfo, school " +
             "WHERE professinfo.schoolId = school.schoolId " +
             "<if test='professName != null and professName.length>0'>AND professinfo.professName LIKE CONCAT('%', #{professName}, '%')</if>" +
+            "limit #{current},#{pageSize}" +
             "</script>")
-    List<ProfessionAndSchoolVo> selectProfessInfoByPro(@Param("professName") String professName);
+    List<ProfessionAndSchoolVo> selectProfessInfoByPro(@Param("professName") String professName, @Param("current") int current, @Param("pageSize") int pageSize);
 
 
-    @Select("SELECT DISTINCT professinfo.type,professinfo.schoolId,professinfo.proCode, professinfo.proId, school.schoolCode, school.schoolName, " +
-            "professinfo.professName, professinfo.totalPlan, professinfo.troublePlan, professinfo.soldierPlan, " +
-            "professinfo.tuition, professinfo.englishReq, professinfo.remarks " +
+    @Select("SELECT DISTINCT professinfo.type, professinfo.schoolId, professinfo.proCode, professinfo.proId, school.schoolCode, school.schoolName, professinfo.professName, professinfo.totalPlan, professinfo.troublePlan, professinfo.soldierPlan, professinfo.tuition, professinfo.englishReq, professinfo.remarks " +
             "FROM professinfo, school " +
             "WHERE professinfo.schoolId = school.schoolId " +
-            "AND (professinfo.remarks LIKE CONCAT('%', #{remarks}, '%') OR LENGTH(professinfo.remarks) <= 51 )")
-    List<ProfessionAndSchoolVo> selectProfessInfoByRemarks(@Param("remarks") String remarks);
+            "AND (professinfo.remarks LIKE CONCAT('%', #{remarks}, '%') OR LENGTH(professinfo.remarks) <= 51)" +
+            "limit #{current},#{pageSize}")
+    List<ProfessionAndSchoolVo> selectProfessInfoByRemarks(@Param("remarks") String remarks, @Param("current") int current, @Param("pageSize") int pageSize);
 
     /**
      * 根据学校id，专业id查询一个专业的数据

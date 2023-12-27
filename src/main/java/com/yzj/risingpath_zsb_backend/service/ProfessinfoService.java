@@ -69,12 +69,12 @@ public interface ProfessinfoService extends IService<Professinfo> {
      * @param professName
      * @return
      */
-    List<ProfessionAndSchoolVo> selectProfessInfoByPro(@Param("professName") String professName);
+    List<ProfessionAndSchoolVo> selectProfessInfoByPro( String professName,Integer current, Integer pageSize);
 
     /**
      * 备注模糊查询
      */
-    List<ProfessionAndSchoolVo> selectProfessInfoByRemarks(@Param("remarks") String remarks);
+    List<ProfessionAndSchoolVo> selectProfessInfoByRemarks( String remarks,Integer current, Integer pageSize);
 
     /**
      * 根据学校id，专业id查询数据
@@ -111,4 +111,7 @@ public interface ProfessinfoService extends IService<Professinfo> {
     List<SimulationMajorVo> getSimulationMajorVo(@Param("remarks") String remarks, @Param("school") String schoolName, @Param("type") String type);
 
 
+    int selectProfessInfoByProNameCount(String professionName);
+
+    int selectProfessInfoByRemarkCount(String remarks);
 }

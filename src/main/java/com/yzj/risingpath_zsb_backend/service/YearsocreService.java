@@ -40,15 +40,21 @@ public interface YearsocreService extends IService<Yearsocre> {
     /**
      *根据学校名模糊查询分数
      */
-    List<ScoreAndProfessinfoVo> getScoreBySchoolName(@Param("schoolName") String schoolName);
+    List<ScoreAndProfessinfoVo> getScoreBySchoolName(String schoolName,Integer current, Integer pageSize);
 
     /**
      * 根据专业名模糊查询分数
      */
-    List<ScoreAndProfessinfoVo> getScoreByProfessinfo(@Param("professName") String professName);
+    List<ScoreAndProfessinfoVo> getScoreByProfessinfo(String professName,Integer current, Integer pageSize);
 
     /**
      * 根据报考要求模糊查询分数
      */
-    List<ScoreAndProfessinfoVo> getScoreByRemarks(@Param("remarks") String remarks);
+    List<ScoreAndProfessinfoVo> getScoreByRemarks(String remarks,Integer current, Integer pageSize);
+
+    Integer selectScoreBySchoolNameCount(@Param("schoolName") String schoolName);
+
+    Integer selectScoreByProfessNameCount(@Param("professName") String professName);
+
+    Integer selectSocreByRemarkCount(@Param("remarks") String remarks);
 }
