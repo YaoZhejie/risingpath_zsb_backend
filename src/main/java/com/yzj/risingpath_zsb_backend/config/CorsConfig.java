@@ -24,13 +24,4 @@ public class CorsConfig implements WebMvcConfigurer {
         return new CorsFilter(source);
     }
 
-//    @Bean
-//    public LoginInterceptor getLoginIntercepter() {
-//        return new LoginInterceptor();
-//    }
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry){
-//        registry.addInterceptor(getLoginIntercepter()).addPathPatterns("/**").excludePathPatterns("/index.html");
-//    }
 }

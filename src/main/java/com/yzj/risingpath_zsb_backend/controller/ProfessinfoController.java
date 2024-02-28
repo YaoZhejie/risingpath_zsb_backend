@@ -85,23 +85,6 @@ public class ProfessinfoController {
     }
 
 
-//    /**
-//     * 查询所有专业信息,添加redis缓存
-//     */
-//    @GetMapping(value = "/allprofessinfo")
-//    public List<Professinfo> allprofessinfo(HttpServletRequest request) {
-//        // 获取 RedisTemplate 中的 ValueOperations
-//        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
-//        //从redis中获取professions的值
-//        List<Professinfo> list = (List<Professinfo>) valueOperations.get("professions");
-//        //从redis获取菜单数据，如果为空，从数据库获取
-//        if (CollectionUtils.isEmpty(list)) {
-//            list = professinfoService.allProfessinfo();
-//            valueOperations.set("professions", list);
-//        }
-//        return list;
-//    }
-
 
     /**
      * 修改专业信息
@@ -166,7 +149,6 @@ public class ProfessinfoController {
     public BaseResponse<List<Professinfo>> selectProfessionBySchoolId(@PathVariable Integer sid) {
         QueryWrapper<Professinfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("schoolId", sid);
-        // select * from profession where id=#{sid}
         List<Professinfo> list = professinfoService.list(queryWrapper);
         if (list == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);

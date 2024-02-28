@@ -1,6 +1,7 @@
 package com.yzj.risingpath_zsb_backend.exception;
 
 import com.yzj.risingpath_zsb_backend.common.ErrorCode;
+import lombok.Getter;
 
 
 /**
@@ -8,6 +9,7 @@ import com.yzj.risingpath_zsb_backend.common.ErrorCode;
  *
  * @author 姚浙杰
  */
+@Getter
 public class BusinessException extends RuntimeException {
 
     private final int code;
@@ -32,11 +34,4 @@ public class BusinessException extends RuntimeException {
         this.description = description;
     }
 
-    public int getCode() {
-        return code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
 }
