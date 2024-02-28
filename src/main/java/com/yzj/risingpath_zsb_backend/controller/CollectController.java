@@ -14,6 +14,7 @@ import com.yzj.risingpath_zsb_backend.exception.BusinessException;
 import com.yzj.risingpath_zsb_backend.service.CollectService;
 import com.yzj.risingpath_zsb_backend.service.ProfessinfoService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/collect")
 public class CollectController {
     @Autowired
@@ -93,7 +95,7 @@ public class CollectController {
         try {
             ExcelUtil.process(fileName,CollectOutputs, CollectOutput.class,response);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("导出志愿收藏失败!");
         }
     }
 }
