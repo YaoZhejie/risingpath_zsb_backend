@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class ProfessionAndSchoolVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ExcelProperty("")
     private String schoolName;
 
     private String schoolCode;

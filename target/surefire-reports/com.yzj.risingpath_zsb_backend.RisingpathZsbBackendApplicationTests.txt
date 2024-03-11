@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.yzj.risingpath_zsb_backend.RisingpathZsbBackendApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.984 s - in com.yzj.risingpath_zsb_backend.RisingpathZsbBackendApplicationTests

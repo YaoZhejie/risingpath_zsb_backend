@@ -20,6 +20,10 @@ public class ResultUtils<I extends Serializable> {
         return new BaseResponse<>(1, data, "ok");
     }
 
+    public static <T> BaseResponse<T> success(T data, String description) {
+        return new BaseResponse<>(1, data, "ok", description);
+    }
+
     /**
      * 失败
      *
